@@ -1,0 +1,22 @@
+<persistence xmlns="http://java.sun.com/xml/ns/persistence"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemalocation="http://java.sun.com/xml/ns/persistence http://java.sun.com/xml/ns/persistence/persistence_2_5.xsd"
+	version="2.5">
+	<persistence-unit name="basicPU">
+		<provider>org.eclipse.persistence.jpa.PersistenceProvider</provider>
+		<transaction-type>RESOURCE_LOCAL</transaction-type>
+		<!-- AutoDetect Entities -->
+		<exclude-unlisted-classes>false</exclude-unlisted-classes>
+
+		<properties>
+			<property name="com.acme.persistence.sql-logging" value="on" />
+			<!-- Turns on SQL Logging -->
+			<property name="eclipselink.logging.level" value="FINE" />
+			<property name="javax.persistence.jdbc.user" value="root" />
+			<property name="javax.persistence.jdbc.password" value="" />
+			<property name="javax.persistence.jdbc.url" value="jdbc:mysql://localhost:3306/personal" />
+			<property name="javax.persistence.jdbc.driver" value="com.mysql.jdbc.Driver" /> 
+
+		</properties>
+	</persistence-unit>
+</persistence>
