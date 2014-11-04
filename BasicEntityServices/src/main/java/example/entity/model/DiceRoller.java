@@ -5,6 +5,8 @@ import javax.persistence.EntityManagerFactory;
 import javax.persistence.Persistence;
 
 import example.entity.dao.AbstractDAO;
+import example.entity.dao.CustomerDAO;
+import example.entity.dao.ICustomerDAO;
 import example.entity.dao.IDAO;
 import example.entity.dynamic.proxy.DynamicProxyForEM;
 
@@ -17,9 +19,25 @@ public class DiceRoller {
 	 */
 	public static void main(String[] args) {
 
+		insert();
+		
+		Customer customer = findByCustomerName("sam.mukherjee@abc.com");
+
+		assert (null != customer);
+
+	}
+
+	private static Customer findByCustomerName(String email) {
+		ICustomerDAO proxy = (ICustomerDAO) DynamicProxyForEM.getInstance(new CustomerDAO());
+ 
+		return proxy.findByEmailID(email);
+
+	}
+
+	private static void insert() {
 		// test.instantiateEntityManager();
 
-		IDAO proxy = (IDAO) DynamicProxyForEM.getInstance(new AbstractDAO<Address>());
+		IDAO proxy = (IDAO) DynamicProxyForEM.getInstance(new CustomerDAO());
 
 		System.out.println(proxy instanceof IDAO);
 
@@ -30,6 +48,18 @@ public class DiceRoller {
 
 		proxy.insert(address);
 
+		Customer customer = new Customer();
+		customer.setEmail("sam.mukherjee@abbd.com");
+		customer.setFirstName("SammyTo");
+		customer.setLastName("Mukherjee");
+
+		proxy.insert(customer);
+
+		CustomerToAddress customerToAddress = new CustomerToAddress();
+		customerToAddress.setAddress(address);
+		customerToAddress.setCustomer(customer);
+
+		proxy.insert(customerToAddress);
 	}
 
 	private void instantiateEntityManager() {

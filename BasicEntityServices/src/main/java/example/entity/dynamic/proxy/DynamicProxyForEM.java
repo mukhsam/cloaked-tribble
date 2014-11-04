@@ -50,14 +50,14 @@ public class DynamicProxyForEM implements java.lang.reflect.InvocationHandler {
 
 			if (objectToBeProxied instanceof AbstractDAO) {
 				AbstractDAO<AbstractEntity> absDAO = (AbstractDAO<AbstractEntity>) objectToBeProxied;
-				Method methodFromAbstractDAO = absDAO.getClass().getDeclaredMethod("setEm", EntityManager.class);
+				Method methodFromAbstractDAO = absDAO.getClass().getMethod("setEm", EntityManager.class);
 				methodFromAbstractDAO.setAccessible(true);
 
-				EntityManagerFactory emf = Persistence.createEntityManagerFactory("basicPU");
+				final EntityManagerFactory emf = Persistence.createEntityManagerFactory("basicPU");
 				em = emf.createEntityManager();
 
 				methodFromAbstractDAO.invoke(absDAO, em);
-
+				// Start transaction if the interface contract is annotated with the RequiresTransaction annotation
 				RequiresTransaction reTran = method.getAnnotation(RequiresTransaction.class);
 
 				if (null != reTran) {

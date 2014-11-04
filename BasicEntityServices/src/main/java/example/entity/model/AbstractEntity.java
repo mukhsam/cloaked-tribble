@@ -18,6 +18,7 @@ import javax.persistence.PrePersist;
  */
 @MappedSuperclass
 public abstract class AbstractEntity {
+	 
 
 	@PrePersist
 	protected void assignPK() {
