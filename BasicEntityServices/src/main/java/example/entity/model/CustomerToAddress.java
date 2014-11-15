@@ -15,8 +15,12 @@ import javax.persistence.Table;
  */
 /*
  * 
- * create table customer_to_address ( id varchar (100), address_id varchar
- * (100), customer_id varchar (100) )
+ * create table customer_to_address ( 
+id varchar (100), 
+address_id varchar(100), 
+customer_id varchar (100),
+dateadded DATETIME,
+datemodified DATETIME )
  */
 
 @NamedQueries({ @NamedQuery(name = "Customer.FindAddress", query = "SELECT c.address FROM CustomerToAddress c where c.customer.email = :email")

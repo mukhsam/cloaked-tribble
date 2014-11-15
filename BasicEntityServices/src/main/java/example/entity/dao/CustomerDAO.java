@@ -1,6 +1,6 @@
 package example.entity.dao;
 
-import java.util.Arrays;
+import java.util.List;
 
 import javax.persistence.TypedQuery;
 import javax.persistence.criteria.CriteriaBuilder;
@@ -8,6 +8,7 @@ import javax.persistence.criteria.CriteriaQuery;
 import javax.persistence.criteria.Predicate;
 import javax.persistence.criteria.Root;
 
+import org.apache.commons.collections.CollectionUtils;
 import org.apache.commons.lang3.StringUtils;
 
 import example.entity.model.Customer;
@@ -34,9 +35,11 @@ public class CustomerDAO extends AbstractDAO<Customer> implements ICustomerDAO {
 		cq.where( predicate);
 
 		final TypedQuery<Customer> typedQuery = this.getEm().createQuery(cq);
-		final Customer result = typedQuery.getSingleResult();
+		//TODO Put a constrant
+		List<Customer> list = typedQuery.getResultList();
+		final Customer result = CollectionUtils.isNotEmpty(list) ?list .get(0) :null;
 
 		return result;
 	}
-
+ 
 }

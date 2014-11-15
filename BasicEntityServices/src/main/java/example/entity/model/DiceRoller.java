@@ -1,10 +1,11 @@
 package example.entity.model;
 
+import java.util.List;
+
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
 import javax.persistence.Persistence;
 
-import example.entity.dao.AbstractDAO;
 import example.entity.dao.CustomerDAO;
 import example.entity.dao.ICustomerDAO;
 import example.entity.dao.IDAO;
@@ -19,11 +20,18 @@ public class DiceRoller {
 	 */
 	public static void main(String[] args) {
 
-		insert();
+		//insert();
 		
-		Customer customer = findByCustomerName("sam.mukherjee@abc.com");
+		Customer customer = findByCustomerName("sam.mukherjee@abbd.com");
 
 		assert (null != customer);
+		
+		List<Customer> list = findAll(0,1);
+		assert (1 == list.size());
+		list = findAll(0,2);
+		assert (2 == list.size());
+		
+		
 
 	}
 
@@ -33,6 +41,15 @@ public class DiceRoller {
 		return proxy.findByEmailID(email);
 
 	}
+	
+	private static List<Customer> findAll(final int startIndex, final int totalCount) {
+		ICustomerDAO proxy = (ICustomerDAO) DynamicProxyForEM.getInstance(new CustomerDAO());
+ 
+		return (List<Customer>) proxy.findAll(Customer.class, startIndex, totalCount);
+
+	}
+	
+	
 
 	private static void insert() {
 		// test.instantiateEntityManager();

@@ -11,8 +11,14 @@ import javax.persistence.Table;
  */
 
 /*
- * create table address ( id varchar (100), city varchar (100), state char (2),
- * zip int (5) ) mm
+ * create table address ( 
+id varchar (100), 
+city varchar (100), 
+state char (2),
+zip int (5) ,
+dateadded DATETIME,
+datemodified DATETIME
+) 
  */
 @Entity
 @Table(name = "address")

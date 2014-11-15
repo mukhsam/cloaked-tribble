@@ -2,6 +2,8 @@ package example.entity.model;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.NamedQueries;
+import javax.persistence.NamedQuery;
 import javax.persistence.Table;
 
 /**
@@ -13,8 +15,15 @@ import javax.persistence.Table;
 /*
  * 
  * create table customer ( id VARCHAR (100), firstname VARCHAR (200), lastname
- * VARCHAR (200), email VARCHAR (200) )
+ * VARCHAR (200), email VARCHAR (200) ,
+ * dateadded DATETIME,
+ * datemodified DATETIME)
  */
+
+@NamedQueries({ 
+    @NamedQuery(name="Country.findByName",
+                query="SELECT c FROM Customer c WHERE c.email = :email"),
+}) 
 
 @Entity
 @Table(name = "customer")
